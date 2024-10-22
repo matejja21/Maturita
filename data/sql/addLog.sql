@@ -1,0 +1,1 @@
+INSERT INTO logs (code, message, file, time) VALUES (:code, :message, :file, :time);
