@@ -5,16 +5,34 @@
     spl_autoload_register('AutoLoad');
 
     function AutoLoad($className) {
-        $path = "classes/";
-        $extension = ".class.php";
-        $fullPath = $path . $className . $extension;
+        for ($i = 0; $i < 3; $i++) {
+            $path = leveledPath("classes/", $i);
+            $extension = ".class.php";
+            $fullPath = $path . $className . $extension;
 
-        if (!file_exists($fullPath)) {
-            return false;
-        } else {
-            include_once $fullPath;
+            if (file_exists($fullPath)) {
+                include_once $fullPath;
+            }
+        }
+    }
+
+    function leveledPath($path, int $level) {
+        $leveledPath = "";
+
+        // adding to the start of the path number of stepbacks by given level
+        for ($i = 0; $i < $level; $i++) {
+            $leveledPath .= "../";
         }
 
+        // appending actual path into our leveled path (now on root level)
+        $leveledPath .= $path;
+
+        // return leveled path string
+        return $leveledPath;
+    }
+
+    function SetLevel(int $level = 0) {
+        General\Log::$level = $level;
     }
 
 ?>

@@ -7,19 +7,21 @@ class Log {
 
     // class properties
     private static $logFolder = "data/logs/"; // directory path for saving loggs
-
+    public  static $level = 0;
     // class methods
 
     // Method for adding one log
-    public static function Add(\Exception $e, int $level = 0) {
-        self::addToFile($e, $level); // Logging into file
+    public static function Add(\Exception $e) {
+        self::addToFile($e, self::$level); // Logging into file
         try { // Logging into database (try for database failure)
-            self::addToDb($e, $level);
+            self::addToDb($e, self::$level);
+        } catch (Exception $e) {
+            self::addToFile($e);
         }
     }
 
     // Method for logging into database
-    private static function addToDb(\Exception $e, int $level = 0) {
+    private static function addToDb(\Exception $e) {
         // setting data
         $data = [
             ":code" => $e->GetCode(), // code of exception
@@ -33,9 +35,9 @@ class Log {
     }
 
     // Method for logging into file
-    private static function addToFile(\Exception $e, int $level = 0) {
+    private static function addToFile(\Exception $e) {
         // leveling path for saving
-        $path = self::leveledPath(self::$logFolder, $level);
+        $path = self::leveledPath(self::$logFolder);
         
         // deleting old files 
         self::deleteOldFiles($path);
@@ -50,11 +52,11 @@ class Log {
 
     // Method for leveling directory path 
     //(if running script is not in the root level, the level number represents number of step backs "../" before path to get to the root level)
-    private static function leveledPath($path, $level = 0) {
+    private static function leveledPath($path) {
         $leveledPath = "";
 
         // adding to the start of the path number of stepbacks by given level
-        for ($i = 0; $i < $level; $i++) {
+        for ($i = 0; $i < self::$level; $i++) {
             $leveledPath .= "../";
         }
 
