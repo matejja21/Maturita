@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     // This code inspired by: https://www.youtube.com/watch?v=z3pZdmJ64jo&list=PL0eyrZgxdwhypQiZnYXM7z7-OTkcMgGPh&index=9
 
     spl_autoload_register('AutoLoad');
@@ -32,7 +34,7 @@
     }
 
     function SetLevel(int $level = 0) {
-        General\Log::$level = $level;
+        General\App::$level = $level;
     }
 
 ?>

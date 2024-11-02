@@ -11,5 +11,7 @@ var_dump(General\Db::FExec("../data/sql/selectUsers.sql"));
 //echo date('m_Y', mktime(0, 0, 0, date('m'), 1, date('Y')));
 
 General\Log::Add(new Exception());
+$user = new View\UserView();
+$user->verifyAdmin();
 
 ?>

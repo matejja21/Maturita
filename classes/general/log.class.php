@@ -7,14 +7,13 @@ class Log {
 
     // class properties
     private static $logFolder = "data/logs/"; // directory path for saving loggs
-    public  static $level = 0;
     // class methods
 
     // Method for adding one log
     public static function Add(\Exception $e) {
-        self::addToFile($e, self::$level); // Logging into file
+        self::addToFile($e); // Logging into file
         try { // Logging into database (try for database failure)
-            self::addToDb($e, self::$level);
+            self::addToDb($e);
         } catch (Exception $e) {
             self::addToFile($e);
         }
@@ -56,7 +55,7 @@ class Log {
         $leveledPath = "";
 
         // adding to the start of the path number of stepbacks by given level
-        for ($i = 0; $i < self::$level; $i++) {
+        for ($i = 0; $i < App::$level; $i++) {
             $leveledPath .= "../";
         }
 
