@@ -3,9 +3,7 @@
 include_once "include/autoload.php";
 include_once "data/config.php";
 
-$_SESSION['user']['id'] = null;
-$_SESSION['user']['email'] = "smthng@gmail.com";
-$_SESSION['user']['level'] = 1;
+//var_dump($_SESSION);
 
 //echo General\Config::$db['host'];
 
@@ -33,3 +31,5 @@ $user->userButton();
     
 </body>
 </html>
+
+<?php General\Error::show(); ?>

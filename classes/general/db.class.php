@@ -39,22 +39,26 @@ class Db {
     }
 
     // Method for execute sql query
-    public static function Exec($query, $data = null) {
+    public static function Exec($query, $data = null, bool $insert = false) {
         $conn = self::Conn(); // setting up connection
         $stmt = $conn->prepare($query);
         $stmt->execute($data);
-        return $stmt->fetchAll(); // return data
+        if ($insert) {
+            return $conn->lastInsertId(); // return last inserted id
+        } else {
+            return $stmt->fetchAll(); // return data
+        }
     }
 
     // Method for executing sql query from file
-    public static function FExec($sqlFile, $data = null) {
-        try {
-            $conn = self::Conn();
-            $stmt = $conn->prepare(file_get_contents($sqlFile));
-            $stmt->execute($data);
-            return $stmt->fetchAll();
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+    public static function FExec($sqlFile, $data = null, bool $insert = false) {
+        $conn = self::Conn();
+        $stmt = $conn->prepare(file_get_contents(App::leveledPath($sqlFile)));
+        $stmt->execute($data);
+        if ($insert) {
+            return $conn->lastInsertId(); // return last inserted id
+        } else {
+            return $stmt->fetchAll(); // return data
         }
     }
 

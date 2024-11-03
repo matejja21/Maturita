@@ -11,9 +11,10 @@ class UserView
 
         public function userButton() {
             if ($this->isLoggedIn()) {
-                echo "
-                    <h1>".$this->email."<h1>    
-                ";
+                echo '
+                    <h1>'.$this->email.'</h1>
+                    <a href="action/logout.php">Log out</a>  
+                ';
             } else {
                 echo '<div id="g_id_onload"
                         data-client_id="'.Config::$google['client_id'].'"

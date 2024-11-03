@@ -1,0 +1,1 @@
+INSERT INTO user (email, level) VALUES (:email, :level);

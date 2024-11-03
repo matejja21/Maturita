@@ -8,6 +8,6 @@ include_once "../lib/google-api-php-client--PHP7.0/vendor/autoload.php";
 SetLevel(1);
 
 $user = new Controller\UserCon();
-$user->handleLogin();
+$user->handleLogout();
 
 header('location: '.General\App::leveledPath("index.php"));

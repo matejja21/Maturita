@@ -52,6 +52,15 @@ class User {
             return false;
         }
     }
+
+    protected function addUser($email, $level = 0) {
+        try {
+            return Db::FExec('data/sql/addUser.sql', ["email" => $email, "level" => $level], true);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
 }
 
 ?>
