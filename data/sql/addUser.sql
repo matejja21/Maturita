@@ -1,1 +1,1 @@
-INSERT INTO user (email, level) VALUES (:email, :level);
+INSERT INTO users (email, level) VALUES (:email, :level);
