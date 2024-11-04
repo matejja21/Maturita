@@ -11,10 +11,9 @@ include_once "data/config.php";
 
 //echo date('m_Y', mktime(0, 0, 0, date('m'), 1, date('Y')));
 
-General\Log::Add(new Exception());
+//General\Log::Add(new Exception());
 
 $user = new View\UserView();
-$user->userButton();
 
 ?>
 
@@ -28,7 +27,7 @@ $user->userButton();
 
 </head>
 <body>
-    
+    <?php $user->userButton();?>
 </body>
 </html>
 
