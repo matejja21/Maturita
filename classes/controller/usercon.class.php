@@ -30,6 +30,9 @@ class UserCon
                         $_SESSION['user']['level'] = $data['level'];
                     } else {
                         $id = $this->addUser($user);
+                        if ($id == 1) {
+                            $this->changeLevel(1);
+                        }
                         var_dump($id);
                         $_SESSION['user']['email'] = $user;
                         $_SESSION['user']['id'] = $id;

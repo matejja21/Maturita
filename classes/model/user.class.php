@@ -3,6 +3,7 @@
 namespace Model;
 
 use General\Db as Db;
+use General\Config as Config;
 
 class User {
     public $id;
@@ -43,6 +44,15 @@ class User {
         }
     }
 
+    public function changeLevel($level) {
+        try {
+            return Db::FExec('data/sql/updateUserLevel.sql', ["user_id" => $this->id, "level" => $level]);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
+
     public function getUserByEmail($email) {
         $data = Db::FExec("data/sql/selectUserByEmail.sql", ["email" => $email]);
 
@@ -55,7 +65,16 @@ class User {
 
     protected function addUser($email, $level = 0) {
         try {
-            return Db::FExec('data/sql/addUser.sql', ["email" => $email, "level" => $level], true);
+            return Db::FExec('data/sql/addUser.sql', ["email" => $email, "level" => $level, "secret_key" => openssl_encrypt(bin2hex(random_bytes(16)), 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn")], true);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
+
+    protected function getSecretKey() {
+        try {
+            return openssl_decrypt(Db::FExec('data/sql/selectUserSecretKey.sql', ['user_id' => $this->id])[0]['secret_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn");
         } catch (Exception $e) {
             Log::Add($e);
             Error::add($e->Message);

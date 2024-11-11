@@ -1,0 +1,1 @@
+SELECT secret_key FROM users WHERE user_id = :user_id;

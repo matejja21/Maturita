@@ -14,6 +14,7 @@ class UserView
                 echo '
                     <h1>'.$this->email.'</h1>
                     <a href="action/logout.php">Log out</a>  
+                    <h2>secret key: '.$this->getSecretKey().'</h2>
                 ';
             } else {
                 echo '<div id="g_id_onload"

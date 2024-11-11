@@ -1,0 +1,1 @@
+UPDATE users SET level = :level WHERE user_id = :user_id;
