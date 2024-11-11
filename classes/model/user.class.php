@@ -4,6 +4,8 @@ namespace Model;
 
 use General\Db as Db;
 use General\Config as Config;
+use General\Log as Log;
+use General\Error as Error;
 
 class User {
     public $id;

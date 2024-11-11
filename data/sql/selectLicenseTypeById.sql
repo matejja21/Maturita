@@ -1,0 +1,1 @@
+SELECT * FROM license_types WHERE license_type_id = :id;

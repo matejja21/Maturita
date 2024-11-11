@@ -14,6 +14,7 @@ include_once "data/config.php";
 //General\Log::Add(new Exception());
 
 $user = new View\UserView();
+$licenseTypes = new View\LicenseTypeView();
 
 ?>
 
@@ -28,6 +29,17 @@ $user = new View\UserView();
 </head>
 <body>
     <?php $user->userButton();?>
+    <br>
+    <h2>Available licenses</h2>
+    <?php $licenseTypes->showAllLicenseTypes();?>
+
+    <?php 
+        if ($user->isLoggedIn()) {
+            echo '<h2>Your licenses</h2>';
+            $licenses = new View\LicenseView();
+            $licenses->showAllUserLicenses($_SESSION['user']['id']);
+        }
+    ?> 
 </body>
 </html>
 
