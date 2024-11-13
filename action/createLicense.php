@@ -26,7 +26,7 @@ if ($user->isLoggedIn()) {
         General\Error::Add('Fail to create license, invalid data were given');
     }
 } else {
-    General\Error::Add('You must be logged in to create license');
+    General\Error::add('You must be logged in to create license');
 }
 
 header('location: '.General\App::leveledPath("index.php"));

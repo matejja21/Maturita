@@ -19,4 +19,13 @@ class LicenseCon
             );
         }
 
+        public function changeLicense(int $user_id) {
+            $license_owner = $this->licenseOwner();
+            if ($license_owner && $license_owner == $user_id) {
+                $this->updateLicense(bin2hex(random_bytes(32)));
+            } else {
+                Error::add("You can not change another users licenses");
+            }
+        }
+
 }

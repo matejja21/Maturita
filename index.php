@@ -16,6 +16,7 @@ include_once "data/config.php";
 $user = new View\UserView();
 $licenseTypes = new View\LicenseTypeView();
 
+//var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>

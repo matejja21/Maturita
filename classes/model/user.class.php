@@ -51,7 +51,7 @@ class User {
             return Db::FExec('data/sql/updateUserLevel.sql', ["user_id" => $this->id, "level" => $level]);
         } catch (Exception $e) {
             Log::Add($e);
-            Error::add($e->Message);
+            Error::add($e->GetMessage());
         }
     }
 
@@ -70,7 +70,7 @@ class User {
             return Db::FExec('data/sql/addUser.sql', ["email" => $email, "level" => $level, "secret_key" => openssl_encrypt(bin2hex(random_bytes(16)), 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn")], true);
         } catch (Exception $e) {
             Log::Add($e);
-            Error::add($e->Message);
+            Error::add($e->GetMessage());
         }
     }
 
@@ -79,9 +79,24 @@ class User {
             return openssl_decrypt(Db::FExec('data/sql/selectUserSecretKey.sql', ['user_id' => $this->id])[0]['secret_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn");
         } catch (Exception $e) {
             Log::Add($e);
-            Error::add($e->Message);
+            Error::add($e->GetMessage());
         }
     }
+
+    protected function updateSecretKey(string $key) {
+        echo "I am happening";
+        try {
+            $data = [
+                "secret_key" => openssl_encrypt($key, 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn"),
+                "user_id" => $this->id
+            ];
+            Db::FExec('data/sql/updateUserSecretKey.sql', $data);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+        }
+    }
+
 }
 
 ?>

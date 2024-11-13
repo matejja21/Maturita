@@ -1,0 +1,1 @@
+UPDATE users SET secret_key = :secret_key WHERE user_id = :user_id;

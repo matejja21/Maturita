@@ -50,6 +50,15 @@ class UserCon
         public function handleLogout() {
             $_SESSION['user'] = null;
         }
+
+        public function changeSecretKey() {
+            $secret_key = bin2hex(random_bytes(16));
+            try {
+                $this->updateSecretKey($secret_key);
+            } catch (\Throwable $e) {
+                Error::add($e->GetMessage());
+            }
+        }
     }
 
 ?>

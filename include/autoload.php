@@ -1,6 +1,7 @@
 <?php
 
     session_start();
+    //ini_set('display_errors', 0);
 
     // This code inspired by: https://www.youtube.com/watch?v=z3pZdmJ64jo&list=PL0eyrZgxdwhypQiZnYXM7z7-OTkcMgGPh&index=9
 

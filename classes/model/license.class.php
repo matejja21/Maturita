@@ -34,7 +34,8 @@ class License {
                 ], true);
         } catch (Exception $e) {
             Log::Add($e);
-            Error::add($e->Message);
+            Error::add($e->GetMessage());
+            return false;
         }
     }
 
@@ -47,7 +48,35 @@ class License {
             return $data;
         } catch (Exception $e) {
             Log::Add($e);
-            Error::add($e->Message);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
+    public function licenseOwner() {
+        //echo "this happened";
+        if ($this->license_id) {
+            try {
+                $data = Db::FExec('data/sql/selectLicenseOwner.sql', ['license_id' => $this->license_id]);
+                return $data[0]['user_id'];
+            } catch (Exception $e) {
+                Log::Add($e);
+                Error::add($e->GetMessage());
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function updateLicense($license) {
+        try {
+            //echo "This happend too";
+            return Db::FExec('data/sql/updateLicense.sql', ['license_key' => openssl_encrypt($license, 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn"), 'license_id' => $this->license_id]);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
         }
     }
 

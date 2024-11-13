@@ -19,6 +19,8 @@ class Db {
         self::$name = Config::$db['name'];
         self::$user = Config::$db['user'];
         self::$password = Config::$db['password'];
+
+        set_time_limit(5);
     }
 
     // Method for creating mysql connection
@@ -32,34 +34,57 @@ class Db {
             } else {
                 return false;
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             Log::Add($e);
+            Error::add("Can not connect to database");
             return false;
         }
     }
 
     // Method for execute sql query
     public static function Exec($query, $data = null, bool $insert = false) {
-        $conn = self::Conn(); // setting up connection
-        $stmt = $conn->prepare($query);
-        $stmt->execute($data);
-        if ($insert) {
-            return $conn->lastInsertId(); // return last inserted id
-        } else {
-            return $stmt->fetchAll(); // return data
+        try {
+            $conn = self::Conn(); // setting up connection
+            if ($conn) {
+                $stmt = $conn->prepare($query);
+                $stmt->execute($data);
+                if ($insert) {
+                    return $conn->lastInsertId(); // return last inserted id
+                } else {
+                    return $stmt->fetchAll(); // return data
+                }
+            } else {
+                return false;
+            }
+        } catch (\Throwable $e) {
+            Log::Add($e);
+            Error::add("There is some problem with database");
+            return false;
         }
     }
 
     // Method for executing sql query from file
     public static function FExec($sqlFile, $data = null, bool $insert = false) {
-        $conn = self::Conn();
-        $stmt = $conn->prepare(file_get_contents(App::leveledPath($sqlFile)));
-        $stmt->execute($data);
-        if ($insert) {
-            return $conn->lastInsertId(); // return last inserted id
-        } else {
-            return $stmt->fetchAll(); // return data
+        try {
+            $conn = self::Conn();
+            if ($conn) {
+                //echo file_get_contents(App::leveledPath($sqlFile))."<br>";
+                $stmt = $conn->prepare(file_get_contents(App::leveledPath($sqlFile)));
+                $stmt->execute($data);
+                if ($insert) {
+                    return $conn->lastInsertId(); // return last inserted id
+                } else {
+                    return $stmt->fetchAll(); // return data
+                }
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::Add($e);
+            Error::add("There is some problem with database");
+            return false;
         }
+        
     }
 
 }
