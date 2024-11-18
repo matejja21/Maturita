@@ -1,1 +1,1 @@
-SELECT * FROM licenses WHERE user_id = :user_id;
+SELECT * FROM licenses INNER JOIN license_types ON licenses.license_type_id = license_types.license_type_id WHERE user_id = :user_id;

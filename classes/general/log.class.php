@@ -30,13 +30,13 @@ class Log {
         ];
 
         // execute data into database troug SQL query in separate file
-        Db::FExec(self::leveledPath("data/sql/addLog.sql"), $data);
+        Db::FExec("data/sql/addLog.sql", $data);
     }
 
     // Method for logging into file
     private static function addToFile(\Exception $e) {
         // leveling path for saving
-        $path = self::leveledPath(self::$logFolder);
+        $path = App::leveledPath(self::$logFolder);
         
         // deleting old files 
         self::deleteOldFiles($path);
@@ -49,22 +49,6 @@ class Log {
         fclose($fp);
     }
 
-    // Method for leveling directory path 
-    //(if running script is not in the root level, the level number represents number of step backs "../" before path to get to the root level)
-    private static function leveledPath($path) {
-        $leveledPath = "";
-
-        // adding to the start of the path number of stepbacks by given level
-        for ($i = 0; $i < App::$level; $i++) {
-            $leveledPath .= "../";
-        }
-
-        // appending actual path into our leveled path (now on root level)
-        $leveledPath .= $path;
-
-        // return leveled path string
-        return $leveledPath;
-    }
 
     // Method for deleting all files from log directory except of this and previous month (to save space)
     private static function deleteOldFiles($path) {

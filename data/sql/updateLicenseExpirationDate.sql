@@ -1,0 +1,1 @@
+UPDATE licenses SET expiration_date = :expiration_date WHERE license_id = :license_id;

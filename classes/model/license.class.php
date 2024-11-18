@@ -80,6 +80,44 @@ class License {
         }
     }
 
+    public function selectExpirationDate() {
+        try {
+            //echo "This happend too";
+            $data = Db::FExec('data/sql/selectLicenseExpirationDate.sql', ['license_id' => $this->license_id]);
+            if (isset($data[0]['expiration_date'])) {
+                return $data[0]['expiration_date'];
+            } else {
+                return false;
+            }
+        } catch (Throwable $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
+    public function updateExpirationDate($expiration_date) {
+        try {
+            //echo "This happend too";
+            return Db::FExec('data/sql/updateLicenseExpirationDate.sql', ['license_id' => $this->license_id, 'expiration_date' => $expiration_date]);
+        } catch (Throwable $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
+    public function updateLicenseActivation($bool) {
+        try {
+            //echo "This happend too";
+            return Db::FExec('data/sql/updateLicenseActivation.sql', ['license_id' => $this->license_id, 'activated' => $bool]);
+        } catch (Throwable $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
 }
 
 ?>

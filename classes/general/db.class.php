@@ -20,7 +20,7 @@ class Db {
         self::$user = Config::$db['user'];
         self::$password = Config::$db['password'];
 
-        set_time_limit(5);
+        set_time_limit(10);
     }
 
     // Method for creating mysql connection

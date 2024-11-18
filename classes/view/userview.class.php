@@ -13,7 +13,8 @@ class UserView
             if ($this->isLoggedIn()) {
                 echo '
                     <h1>'.$this->email.'</h1>
-                    <a href="action/logout.php">Log out</a>  
+                    <a href="action/logout.php" alt="log out">Log out</a>
+                    <a href="action/changeSecretKey.php" alt="change secret key">Change secret key</a> 
                     <h2>secret key: '.$this->getSecretKey().'</h2>
                 ';
             } else {

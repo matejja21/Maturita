@@ -1,0 +1,1 @@
+SELECT expiration_date FROM licenses WHERE license_id = :license_id;

@@ -1,0 +1,1 @@
+UPDATE licenses SET activated = :activated WHERE license_id = :license_id;
