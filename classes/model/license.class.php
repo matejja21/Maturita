@@ -30,7 +30,7 @@ class License {
                 ['user_id' => $user_id,
                 'license_type_id' => $license_id,
                 'expiration_date' => $expiration_date,
-                'license_key' => openssl_encrypt($license_key, 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn")
+                'license_key' => openssl_encrypt($license_key, 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv'])
                 ], true);
         } catch (Exception $e) {
             Log::Add($e);
@@ -43,7 +43,7 @@ class License {
         try {
             $data = Db::FExec('data/sql/selectUserLicenses.sql', ['user_id' => $user_id]);
             for ($i = 0; $i < count($data); $i++) {
-                $data[$i]['license_key'] = openssl_decrypt($data[$i]['license_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn");
+                $data[$i]['license_key'] = openssl_decrypt($data[$i]['license_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv']);
             }
             return $data;
         } catch (Exception $e) {
@@ -72,7 +72,7 @@ class License {
     public function updateLicense($license) {
         try {
             //echo "This happend too";
-            return Db::FExec('data/sql/updateLicense.sql', ['license_key' => openssl_encrypt($license, 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, "abcdefghchijklmn"), 'license_id' => $this->license_id]);
+            return Db::FExec('data/sql/updateLicense.sql', ['license_key' => openssl_encrypt($license, 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv']), 'license_id' => $this->license_id]);
         } catch (Exception $e) {
             Log::Add($e);
             Error::add($e->GetMessage());
@@ -117,6 +117,23 @@ class License {
             return false;
         }
     }
+
+    public function selectLicenseKeyByLicenseKey() {
+        try {
+            $data = Db::FExec('data/sql/selectLicenseKeyByLicenseKey.sql', ['license_key' => openssl_encrypt($this->license_key, 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv'])]);
+            if (isset($data[0])) {
+                $data[0]['license_key'] = openssl_decrypt($data[0]['license_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv']);
+                return $data[0];
+            } else {
+                return false;
+            }
+        } catch (Throwable $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
 
 }
 

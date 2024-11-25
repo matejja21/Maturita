@@ -67,4 +67,47 @@ class LicenseCon
             }
         }
 
+        public function validateLicense(string $license, bool $info = false) {
+            $return = [];
+            $errors = [];
+            if (Config::$general['license_type'] == 'secret') {
+                
+            } else if (Config::$general['license_type'] == 'basic') {
+                try {
+                    $data = $this->selectLicenseKeyByLicenseKey($license);
+                    if ($data) {
+                        if (strtotime($data['expiration_date']) >= time()) {
+                            $return['valid'] = true;
+                        } else {
+                            $return['valid'] = false;
+                            $errors[] = ["message" => "license key expired"];
+                        }
+
+                        if ($info) {
+                            $return['info'] = [
+                                'user' => $data['email'],
+                                'license_type' => $data['name'],
+                                'expiration_date' => $data['expiration_date']
+                            ];
+                        }
+                    } else {
+                        $return['valid'] = false;
+                        $errors[] = ["message" => 'this license key is not in database'];
+                    }
+                } catch (Throwable $e) {
+                    $return['valid'] = false;
+                    $errors[] = ["message" => $e->GetMeddage()];
+                }
+
+                
+
+            } else {
+
+            }
+            if (count($errors) > 0) {
+                $return['errors'] = $errors;
+            }
+            return $return;
+        }
+
 }
