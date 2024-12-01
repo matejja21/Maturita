@@ -49,6 +49,15 @@ class LicenseType {
         }
     }
 
+    public function selectLicenseType() {
+        try {
+            return Db::FExec('data/sql/selectLicenseType.sql', ['license_type_id' => $this->id]);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
+
     protected function insertLicenseType($name, $description, $doc_url, $month_price, $currency) {
         try {
             return Db::FExec('data/sql/insertLicenseType.sql', 
@@ -60,6 +69,23 @@ class LicenseType {
                 'currency' => $currency
             ]
             ,1);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
+
+    protected function updateLicenseType($name, $description, $doc_url, $month_price, $currency) {
+        try {
+            return Db::FExec('data/sql/updateLicenseType.sql', 
+            [
+                'license_type_id' => $this->id,
+                'name' => $name, 
+                'description' => $description, 
+                'doc_url' => $doc_url,
+                'monthly_price' => $month_price,
+                'currency' => $currency
+            ]);
         } catch (Exception $e) {
             Log::Add($e);
             Error::add($e->Message);

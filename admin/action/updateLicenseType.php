@@ -7,6 +7,12 @@ SetLevel(2);
 $user = new Controller\UserCon();
 
 if ($user->isLoggedIn() && $user->isAdmin()) {
+    if (isset($_POST['license_type_id']) && is_numeric($_POST['license_type_id']) && $_POST['license_type_id'] > 0) {
+        $license_type_id = $_POST['license_type_id'];
+    } else {
+        $license_type_id = null;
+    }
+
     if (isset($_POST['name']) && !is_null($_POST['name'])) {
         $name = $_POST['name'];
     } else {
@@ -37,15 +43,15 @@ if ($user->isLoggedIn() && $user->isAdmin()) {
         $currency = null;
     }
 
-    if ($name && $description && $doc_url && $month_price && $currency) {
-        $license_type = new Controller\LicenseTypeCon();
-        $license_type->createLicenseType($name, $description, $doc_url, $month_price, $currency);
+    if ($license_type_id && $name && $description && $doc_url && $month_price && $currency) {
+        $license_type = new Controller\LicenseTypeCon($license_type_id);
+        $license_type->changeLicenseType($name, $description, $doc_url, $month_price, $currency);
     } else {
-        General\Error::Add('Fail to create license type, invalid data were given');
+        General\Error::add('Fail to update license type, invalid data were given');
     }
 } else {
-    General\Error::add('You must be logged in to create license');
+    General\Error::add('You must be logged in to update license');
 }
 
 //var_dump($_POST);
-header('location: '.General\App::leveledPath("admin/index.php"));
+header('location: '.General\App::leveledPath("admin/update.php"));

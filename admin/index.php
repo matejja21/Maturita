@@ -8,7 +8,9 @@ SetLevel(1);
 $user = new View\UserView();
 $user->verifyAdmin();
 
+$licenseType = new View\LicenseTypeView();
 
+General\Error::Show();
 ?>
 
 
@@ -34,7 +36,7 @@ $user->verifyAdmin();
         <input type="text" id="create_doc_url" name="doc_url">
 
         <lable for="create_monthly_price">Monthley price: </lable>
-        <input type="number" min="0" max="100" id="create_name" name="monthly_price">
+        <input type="number" min="0" max="100" id="create_name" name="month_price">
 
         <lable for="create_currency">Currency: </lable>
         <select id="create_currency" name="currency">
@@ -44,5 +46,8 @@ $user->verifyAdmin();
         </select>
         <input type="submit">
     </form>
+
+    <h2>License Types</h2>
+    <?=$licenseType->showAllLicenseTypesAdmin()?>
 </body>
 </html>
