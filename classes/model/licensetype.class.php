@@ -48,4 +48,21 @@ class LicenseType {
             Error::add($e->Message);
         }
     }
+
+    protected function insertLicenseType($name, $description, $doc_url, $month_price, $currency) {
+        try {
+            return Db::FExec('data/sql/insertLicenseType.sql', 
+            [
+                'name' => $name, 
+                'description' => $description, 
+                'doc_url' => $doc_url,
+                'monthly_price' => $month_price,
+                'currency' => $currency
+            ]
+            ,1);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
 }

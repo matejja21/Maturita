@@ -5,6 +5,8 @@ namespace View;
 use Model\User as User;
 use General\App as App;
 use General\Config as Config;
+use General\Error as Error;
+
 
 class UserView 
     extends User {
@@ -39,6 +41,7 @@ class UserView
 
         public function verifyAdmin() {
             if (!($this->isAdmin())) {
+                Error::Add('You must be an Admin to enter this page');
                 header("Location: ".App::leveledPath("index.php"));
             }
         }
