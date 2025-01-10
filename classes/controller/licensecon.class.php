@@ -9,6 +9,14 @@ use General\Error as Error;
 
 class LicenseCon
     extends License {
+
+        public function validateLicenseOwner($user_id) {
+            if ($this->licenseOwner() == $user_id) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     
         public function createLicense($user_id, $license_type_id, $month_num) {
             $this->insertLicense(

@@ -91,4 +91,27 @@ class LicenseType {
             Error::add($e->Message);
         }
     }
+
+    public function updateLicenseTypeActivation($bool) {
+        try {
+            //echo "This happend too";
+            return Db::FExec('data/sql/updateLicenseTypeActivation.sql', ['license_type_id' => $this->id, 'activated' => $bool]);
+        } catch (Throwable $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
+    protected function selectLicensTypeByLicenseId($license_id) {
+        try {
+            return Db::FExec('data/sql/selectLicensTypeByLicenseId.sql', 
+            [
+                'license_id' => $license_id
+            ]);
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
 }

@@ -37,8 +37,9 @@ class LicenseView
                            <td>'.$license['name'].'</td>
                            <td>'.$license['expiration_date'].'</td>
                            <td><a href="action/changeLicense.php?license_id='.$license['license_id'].'">Change license key</td>
-                           <form method="POST" action="action/changeLicenseExpirationDate.php">
+                           <form method="GET" action="action/checkout.php">
                                     <td>
+                                        <input type="hidden" name="action_type" value="extend">
                                         <input type="number" min="1" max="36" name="month_num" value="1">
                                         <input type="hidden" name="license_id" value="'.$license['license_id'].'">
                                     </td>

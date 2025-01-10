@@ -35,8 +35,9 @@ class LicenseTypeView
                                 <td>'.$licenseType['doc_url'].'</td>
                                 <td>'.$licenseType['monthly_price'].'</td>
                                 <td>'.$licenseType['currency'].'</td>
-                                <form method="POST" action="action/createLicense.php">
+                                <form method="GET" action="action/checkout.php?">
                                     <td>
+                                        <input type="hidden" name="action_type" value="new">
                                         <input type="number" min="1" max="36" name="month_num" value="1">
                                         <input type="hidden" name="license_type_id" value="'.$licenseType['license_type_id'].'">
                                     </td>
@@ -72,6 +73,13 @@ class LicenseTypeView
                 </tr>';
 
                 foreach($licenseTypes as $licenseType) {
+
+                    if ($licenseType['activated'] == 1) {
+                        $activation_link = '<a href="action/deactivateLicenseType.php?license_type_id='.$licenseType['license_type_id'].'">Deactivate</a>';
+                    } else {
+                        $activation_link = '<a href="action/activateLicenseType.php?license_type_id='.$licenseType['license_type_id'].'">Activate</a>';
+                    }
+
                     $table .= '
                             <tr>
                                 <td>'.$licenseType['license_type_id'].'</td>
@@ -81,7 +89,7 @@ class LicenseTypeView
                                 <td>'.$licenseType['monthly_price'].'</td>
                                 <td>'.$licenseType['currency'].'</td>
                                 <td><a href="update.php?license_type_id='.$licenseType['license_type_id'].'">Update</a></td>
-                                <td><a href="action/activateLicenseType.php?license_type_id='.$licenseType['license_type_id'].'">Deactivate</a></td>
+                                <td>'.$activation_link.'</td>
                             </tr>';
                 }
 
