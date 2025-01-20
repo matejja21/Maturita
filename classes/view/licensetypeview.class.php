@@ -10,46 +10,46 @@ use General\Error as Error;
 class LicenseTypeView  
     extends LicenseType {
 
+        public function showLicenseTypeInfo() {
+            if ($this->id == 0) {
+                echo 'There is no license type with this ID!';
+            } else {
+                $licenseType = $this->selectLicensTypeById();
+                if ($licenseType) {
+                    $licenseType = $licenseType[0];
+                    echo '
+    
+                        <h1>'.$licenseType['name'].'</h1>
+                        <p>'.$licenseType['name'].'</p>
+                        <a href="'.$licenseType['doc_url'].'" class="btn btn-primary">Documentation</a>
+                    ';
+                } else {
+                    echo 'Something wrong with database';
+                }
+            }
+            
+        }
+
         public function showAllLicenseTypes() {
             $licenseTypes = $this->getLicenseTypes();
-
+            $cards = "";
             if ($licenseTypes) {
-                $table = '<table>
-                <tr>
-                    <th>License Type Id</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Documentation URL</th>
-                    <th>Monthly price</th>
-                    <th>Currency</th>
-                    <th>number of month</th>
-                    <th></th>
-                </tr>';
-
                 foreach($licenseTypes as $licenseType) {
-                    $table .= '
-                            <tr>
-                                <td>'.$licenseType['license_type_id'].'</td>
-                                <td>'.$licenseType['name'].'</td>
-                                <td>'.$licenseType['description'].'</td>
-                                <td>'.$licenseType['doc_url'].'</td>
-                                <td>'.$licenseType['monthly_price'].'</td>
-                                <td>'.$licenseType['currency'].'</td>
-                                <form method="GET" action="action/checkout.php?">
-                                    <td>
-                                        <input type="hidden" name="action_type" value="new">
-                                        <input type="number" min="1" max="36" name="month_num" value="1">
-                                        <input type="hidden" name="license_type_id" value="'.$licenseType['license_type_id'].'">
-                                    </td>
-                                    <td>
-                                        <input type="submit" value="Get license">
-                                    <td>
-                                </form>
-                            </tr>';
+
+                
+                    $cards .= '
+                            <div class="col justify-center">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">'.$licenseType['name'].'</h5>
+                                        <p class="card-text">'.App::str_short($licenseType['description'], 50, 0, '...').'</p>
+                                        <a href="license_type.php?id='.$licenseType['license_type_id'].'" class="card-link">Show more</a>
+                                    </div>
+                                </div>
+                            </div>';
                 }
 
-                $table .= '</table>';
-                echo $table;
+                echo $cards;
             } else {
                 Error::show();
             }

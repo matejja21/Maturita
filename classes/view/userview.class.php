@@ -14,10 +14,10 @@ class UserView
         public function userButton() {
             if ($this->isLoggedIn()) {
                 echo '
-                    <h1>'.$this->email.'</h1>
-                    <a href="action/logout.php" alt="log out">Log out</a>
-                    <a href="action/changeSecretKey.php" alt="change secret key">Change secret key</a> 
-                    <h2>secret key: '.$this->getSecretKey().'</h2>
+                    <li>'.$this->email.'</li>
+                    <li><a href="action/logout.php" alt="log out" class="text-light">Log out</a></li>
+                    <li><a href="action/changeSecretKey.php" alt="change secret key" class="text-light">Change secret key</a> </li>
+                    <p class="text-light">secret key: '.$this->getSecretKey().'</p>
                 ';
             } else {
                 echo '<div id="g_id_onload"

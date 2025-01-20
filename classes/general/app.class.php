@@ -19,6 +19,17 @@ class App {
         // return leveled path string
         return $leveledPath;
     }
+
+    // tato funkce je podle: https://stackoverflow.com/a/63891351/20757818
+    public static function str_short($string, $length, $lastLength = 0, $symbol = '...')
+    {
+        if (strlen($string) > $length) {
+            $result = substr($string, 0, $length - $lastLength - strlen($symbol)) . $symbol;
+            return $result . ($lastLength ? substr($string, - $lastLength) : '');
+        }
+    
+        return $string;
+    }
 }
 
 ?>

@@ -110,6 +110,20 @@ class LicenseType {
                 'license_id' => $license_id
             ]);
         } catch (Exception $e) {
+            return false;
+            Log::Add($e);
+            Error::add($e->Message);
+        }
+    }
+
+    protected function selectLicensTypeById() {
+        try {
+            return Db::FExec('data/sql/selectLicenseTypeById.sql', 
+            [
+                'id' => $this->id
+            ]);
+        } catch (Exception $e) {
+            return false;
             Log::Add($e);
             Error::add($e->Message);
         }

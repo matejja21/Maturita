@@ -3,20 +3,17 @@
 include_once "include/autoload.php";
 include_once "data/config.php";
 
-//var_dump($_SESSION);
-
-//echo General\Config::$db['host'];
-
-//var_dump(General\Db::FExec("data/sql/selectUsers.sql"));
-
-//echo date('m_Y', mktime(0, 0, 0, date('m'), 1, date('Y')));
-
-//General\Log::Add(new Exception());
-
 $user = new View\UserView();
-$licenseTypes = new View\LicenseTypeView();
 
-//var_dump($_SESSION);
+if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
+    $licenseType = new View\LicenseTypeView($_GET['id']);
+} else {
+    $licenseType = new View\LicenseTypeView($_GET['id']);
+}
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -49,11 +46,7 @@ $licenseTypes = new View\LicenseTypeView();
     <br>
     
     <div class="container">
-    <h2>Available licenses</h2>
-    <div class="row row-cols-3">
-        <?php $licenseTypes->showAllLicenseTypes();?>
-
-    </div>
+        <?php $licenseType->showLicenseTypeInfo(); ?>
     </div>
     
 
