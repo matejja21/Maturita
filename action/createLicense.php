@@ -45,6 +45,6 @@ if ($user->isLoggedIn()) {
     General\Error::add('You must be logged in to create license');
 }
 
-header('location: '.General\App::leveledPath("index.php"));
+header('location: '.General\App::leveledPath("dashboard.php"));
 
 ?>

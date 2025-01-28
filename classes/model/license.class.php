@@ -53,6 +53,34 @@ class License {
         }
     }
 
+    public function getUserLicensesActivate($user_id) {
+        try {
+            $data = Db::FExec('data/sql/selectUserLicensesActivate.sql', ['user_id' => $user_id]);
+            for ($i = 0; $i < count($data); $i++) {
+                $data[$i]['license_key'] = openssl_decrypt($data[$i]['license_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv']);
+            }
+            return $data;
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
+    public function getUserLicensesDeactivate($user_id) {
+        try {
+            $data = Db::FExec('data/sql/selectUserLicensesDeactivate.sql', ['user_id' => $user_id]);
+            for ($i = 0; $i < count($data); $i++) {
+                $data[$i]['license_key'] = openssl_decrypt($data[$i]['license_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv']);
+            }
+            return $data;
+        } catch (Exception $e) {
+            Log::Add($e);
+            Error::add($e->GetMessage());
+            return false;
+        }
+    }
+
     public function licenseOwner() {
         //echo "this happened";
         if ($this->license_id) {

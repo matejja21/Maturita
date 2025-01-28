@@ -49,7 +49,7 @@ if ($license_id && $month_num) {
     General\Error::add('Invalid data');
 }
 
-header('location: '.General\App::leveledPath("index.php"));
+header('location: '.General\App::leveledPath("dashboard.php"));
 
 
 ?>

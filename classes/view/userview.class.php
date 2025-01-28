@@ -14,27 +14,32 @@ class UserView
         public function userButton() {
             if ($this->isLoggedIn()) {
                 echo '
-                    <li>'.$this->email.'</li>
-                    <li><a href="action/logout.php" alt="log out" class="text-light">Log out</a></li>
-                    <li><a href="action/changeSecretKey.php" alt="change secret key" class="text-light">Change secret key</a> </li>
-                    <p class="text-light">secret key: '.$this->getSecretKey().'</p>
+                    <div class="container">
+                        <li><h3 class="text-light">'.$this->email.'</h3></li>
+                        <li><a href="action/logout.php" alt="log out" class="text-light">Log out</a></li>
+                        <li><a href="action/changeSecretKey.php" alt="change secret key" class="text-light">Change secret key</a> </li>
+                        <p class="text-light">secret key: '.$this->getSecretKey().'</p>
+                    </div>
                 ';
             } else {
-                echo '<div id="g_id_onload"
-                        data-client_id="'.Config::$google['client_id'].'"
-                        data-context="signin"
-                        data-ux_mode="redirect"
-                        data-login_uri="'.Config::$general['app_root_url'].'action/login.php"
-                        data-auto_prompt="false">
-                    </div>
+                echo '
+                    <div class="container">
+                        <div id="g_id_onload"
+                            data-client_id="'.Config::$google['client_id'].'"
+                            data-context="signin"
+                            data-ux_mode="redirect"
+                            data-login_uri="'.Config::$general['app_root_url'].'action/login.php"
+                            data-auto_prompt="false">
+                        </div>
 
-                    <div class="g_id_signin"
-                        data-type="standard"
-                        data-shape="pill"
-                        data-theme="outline"
-                        data-text="signin_with"
-                        data-size="large"
-                        data-logo_alignment="left">
+                        <div class="g_id_signin"
+                            data-type="standard"
+                            data-shape="pill"
+                            data-theme="outline"
+                            data-text="signin_with"
+                            data-size="large"
+                            data-logo_alignment="left">
+                        </div>
                     </div>';
             }
         }

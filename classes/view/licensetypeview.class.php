@@ -20,8 +20,17 @@ class LicenseTypeView
                     echo '
     
                         <h1>'.$licenseType['name'].'</h1>
-                        <p>'.$licenseType['name'].'</p>
+                        <p>'.$licenseType['description'].'</p>
                         <a href="'.$licenseType['doc_url'].'" class="btn btn-primary">Documentation</a>
+                        <div class="container mt-5">
+                            <form action="action/checkout.php" method="GET">
+                                <input type="hidden" name="license_type_id" value="'.$licenseType['license_type_id'].'">
+                                <input type="hidden" name="action_type" value="new">
+                                <lable for="month_num">Month number: </lable>
+                                <input type="number" min="1" max="36" value="1" name="month_num" id="month_num">
+                                <input type="submit" value="Buy license" class="btn btn-primary">
+                            </form>
+                        </div>
                     ';
                 } else {
                     echo 'Something wrong with database';

@@ -26,7 +26,7 @@ if ($license_id) {
     General\Error::add('Invalid data');
 }
 
-header('location: '.General\App::leveledPath("index.php"));
+header('location: '.General\App::leveledPath("dashboard.php"));
 
 
 ?>
