@@ -13,13 +13,17 @@ class UserView
 
         public function userButton() {
             if ($this->isLoggedIn()) {
-                echo '
-                    <div class="container">
-                        <li><h3 class="text-light">'.$this->email.'</h3></li>
-                        <li><a href="action/logout.php" alt="log out" class="text-light">Log out</a></li>
-                        <li><a href="action/changeSecretKey.php" alt="change secret key" class="text-light">Change secret key</a> </li>
-                        <p class="text-light">secret key: '.$this->getSecretKey().'</p>
-                    </div>
+
+                if ($this->isAdmin()) {
+                    $admin_page = '<li class="nav-item mx-2"><a href="admin/index.php" alt="admin" class="text-light">Admin</a></li>';
+                } else {
+                    $admin_page = "";
+                }
+
+                echo $admin_page.'
+                        <li class="nav-item mx-2"><a href="dashboard.php" alt="dashboard" class="text-light">Dashboard</a></li>
+                        <li class="nav-item mx-2"><a href="action/logout.php" alt="log out - '.$this->email.'" class="text-light">'.$this->email.'<br>Log out</a></li>
+                    
                 ';
             } else {
                 echo '

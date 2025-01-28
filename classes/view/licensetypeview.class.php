@@ -24,6 +24,7 @@ class LicenseTypeView
                         <a href="'.$licenseType['doc_url'].'" class="btn btn-primary">Documentation</a>
                         <div class="container mt-5">
                             <form action="action/checkout.php" method="GET">
+                                <p>price per month: '.$licenseType['monthly_price'].' '.$licenseType['currency'].'</p>
                                 <input type="hidden" name="license_type_id" value="'.$licenseType['license_type_id'].'">
                                 <input type="hidden" name="action_type" value="new">
                                 <lable for="month_num">Month number: </lable>
@@ -70,7 +71,7 @@ class LicenseTypeView
             $licenseTypes = $this->getLicenseTypes();
 
             if ($licenseTypes) {
-                $table = '<table>
+                $table = '<div class="container" style="overflow-x: auto;"><table class="table table-striped w-100">
                 <tr>
                     <th>License Type Id</th>
                     <th>Name</th>
@@ -79,14 +80,15 @@ class LicenseTypeView
                     <th>Monthly price</th>
                     <th>Currency</th>
                     <th></th>
+                    <th></th>
                 </tr>';
 
                 foreach($licenseTypes as $licenseType) {
 
                     if ($licenseType['activated'] == 1) {
-                        $activation_link = '<a href="action/deactivateLicenseType.php?license_type_id='.$licenseType['license_type_id'].'">Deactivate</a>';
+                        $activation_link = '<a class="btn btn-primary" href="action/deactivateLicenseType.php?license_type_id='.$licenseType['license_type_id'].'">Deactivate</a>';
                     } else {
-                        $activation_link = '<a href="action/activateLicenseType.php?license_type_id='.$licenseType['license_type_id'].'">Activate</a>';
+                        $activation_link = '<a class="btn btn-primary" href="action/activateLicenseType.php?license_type_id='.$licenseType['license_type_id'].'">Activate</a>';
                     }
 
                     $table .= '
@@ -97,12 +99,12 @@ class LicenseTypeView
                                 <td>'.$licenseType['doc_url'].'</td>
                                 <td>'.$licenseType['monthly_price'].'</td>
                                 <td>'.$licenseType['currency'].'</td>
-                                <td><a href="update.php?license_type_id='.$licenseType['license_type_id'].'">Update</a></td>
-                                <td>'.$activation_link.'</td>
+                                <td><a class="btn btn-primary" href="update.php?license_type_id='.$licenseType['license_type_id'].'">Update</a></td>
+                                <td >'.$activation_link.'</td>
                             </tr>';
                 }
 
-                $table .= '</table>';
+                $table .= '</table></div>';
                 echo $table;
             } else {
                 Error::show();
@@ -153,23 +155,34 @@ class LicenseTypeView
                 <form method="POST" action="action/updateLicenseType.php">
                     <input type="hidden" name="license_type_id" value="'.$this->id.'">
 
-                    <lable for="create_name">Name: </lable>
-                    <input type="text" id="create_name" name="name" value="'.$licenseType['name'].'">
+                    <div class="form-group">
+                        <lable for="create_name">Name: </lable>
+                        <input type="text" id="create_name" name="name" value="'.$licenseType['name'].'" class="form-control">
+                    </div>
 
-                    <lable for="create_description">Description: </lable>
-                    <textarea id="create_description" name="description">'.$licenseType['description'].'</textarea>
+                    <div class="form-group">
+                        <lable for="create_description">Description: </lable>
+                        <textarea id="create_description" name="description" class="form-control">'.$licenseType['description'].'</textarea>
+                    </div>
 
-                    <lable for="create_doc_url">Documentation URL: </lable>
-                    <input type="text" id="create_doc_url" name="doc_url" value="'.$licenseType['doc_url'].'">
+                    <div class="form-group">
+                        <lable for="create_doc_url">Documentation URL: </lable>
+                        <input type="text" id="create_doc_url" name="doc_url" value="'.$licenseType['doc_url'].'" class="form-control">
+                    </div>
 
-                    <lable for="create_monthly_price">Monthley price: </lable>
-                    <input type="number" min="0" max="100" id="create_name" name="month_price" value="'.$licenseType['monthly_price'].'">
+                    <div class="form-group">
+                        <lable for="create_monthly_price">Monthley price: </lable>
+                        <input type="number" min="0" max="100" id="create_name" name="month_price" value="'.$licenseType['monthly_price'].'" class="form-control">
+                    </div>
 
-                    <lable for="create_currency">Currency: </lable>
-                    <select id="create_currency" name="currency">
-                    '.$currency_options.'
-                    </select>
-                    <input type="submit">
+                    <div class="form-group">
+                        <lable for="create_currency">Currency: </lable>
+                        <select id="create_currency" name="currency" class="form-control">
+                        '.$currency_options.'
+                        </select>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary mt-2">
                 </form>
             ';
 
