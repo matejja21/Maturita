@@ -6,8 +6,8 @@ include_once "../../data/config.php";
 SetLevel(2);
 header("Content-Type: application/json; charset=utf-8");
 
-if (isset($_GET['license']) && !is_null($_GET['license'])) {
-    $license_string = $_GET['license'];
+if (isset($_GET['license_key']) && !is_null($_GET['license_key'])) {
+    $license_string = $_GET['license_key'];
 } else {
     $license_string = false;
 }

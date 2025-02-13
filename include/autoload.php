@@ -19,7 +19,7 @@
         }
     }
 
-    function leveledPath($path, int $level) {
+    /*function leveledPath($path, int $level) {
         $leveledPath = "";
 
         // adding to the start of the path number of stepbacks by given level
@@ -32,7 +32,7 @@
 
         // return leveled path string
         return $leveledPath;
-    }
+    }*/
 
     function SetLevel(int $level = 0) {
         General\App::$level = $level;
