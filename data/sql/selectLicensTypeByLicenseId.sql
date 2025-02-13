@@ -1,1 +1,0 @@
-SELECT * FROM license_types WHERE license_type_id = (SELECT license_type_id FROM licenses WHERE license_id = :license_id);

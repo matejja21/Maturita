@@ -15,16 +15,27 @@ class UserView
             if ($this->isLoggedIn()) {
 
                 if ($this->isAdmin()) {
-                    $admin_page = '<li class="nav-item mx-2"><a href="admin/index.php" alt="admin" class="text-light">Admin</a></li>';
+                    if (\General\App::$level == 1) {
+                        $admin_page = '<li class="nav-item mx-2"><a href="index.php" alt="admin" class="text-light">Admin</a></li>';
+                    } else {
+                        $admin_page = '<li class="nav-item mx-2"><a href="admin/index.php" alt="admin" class="text-light">Admin</a></li>';
+                    }
                 } else {
                     $admin_page = "";
                 }
-
+                if (\General\App::$level == 1) {
                 echo $admin_page.'
+                        <li class="nav-item mx-2"><a href="../dashboard.php" alt="dashboard" class="text-light">Dashboard</a></li>
+                        <li class="nav-item mx-2"><a href="../action/logout.php" alt="log out - '.$this->email.'" class="text-light">'.$this->email.'<br>Log out</a></li>
+                    
+                ';
+                } else {
+                    echo $admin_page.'
                         <li class="nav-item mx-2"><a href="dashboard.php" alt="dashboard" class="text-light">Dashboard</a></li>
                         <li class="nav-item mx-2"><a href="action/logout.php" alt="log out - '.$this->email.'" class="text-light">'.$this->email.'<br>Log out</a></li>
                     
                 ';
+                }
             } else {
                 echo '
                     <div class="container">

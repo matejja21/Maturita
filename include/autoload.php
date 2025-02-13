@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    ini_set('display_errors', 0);
+    //ini_set('display_errors', 0);
 
     // This code inspired by: https://www.youtube.com/watch?v=z3pZdmJ64jo&list=PL0eyrZgxdwhypQiZnYXM7z7-OTkcMgGPh&index=9
 
@@ -19,7 +19,7 @@
         }
     }
 
-    /*function leveledPath($path, int $level) {
+    function leveledPath($path, int $level) {
         $leveledPath = "";
 
         // adding to the start of the path number of stepbacks by given level
@@ -32,7 +32,7 @@
 
         // return leveled path string
         return $leveledPath;
-    }*/
+    }
 
     function SetLevel(int $level = 0) {
         General\App::$level = $level;

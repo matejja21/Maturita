@@ -8,7 +8,7 @@ SetLevel(1);
 $user = new View\UserView();
 $user->verifyAdmin();
 
-$licenseType = new View\LicenseTypeView();
+$license = new View\LicenseView();
 
 General\Error::Show();
 ?>
@@ -45,9 +45,9 @@ General\Error::Show();
         
             <h1>Administration page</h1>
 
-            <h2>Create new license type</h2>
+            <h2>Create new license</h2>
             <div class="container">
-                <form method="POST" action="action/createLicenseType.php">
+                <form method="POST" action="action/createLicense.php">
                     <div class="form-group">
                         <lable for="create_name">Name: </lable>
                         <input type="text" id="create_name" name="name" class="form-control">
@@ -80,8 +80,8 @@ General\Error::Show();
                 </form>
             </div>
 
-            <h2>License Types</h2>
-            <?=$licenseType->showAllLicenseTypesAdmin()?>
+            <h2>Licenses</h2>
+            <?=$license->showAllLicensesAdmin()?>
         </div>
     </div>
 </body>

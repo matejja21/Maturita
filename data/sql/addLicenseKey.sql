@@ -1,0 +1,1 @@
+INSERT INTO license_keys (user_id, license_id, license_key, expiration_date) VALUES (:user_id, :license_id, :license_key, :expiration_date);

@@ -8,20 +8,20 @@ SetLevel(1);
 $user = new View\UserView();
 $user->verifyAdmin();
 
-if (isset($_GET['license_type_id']) && is_numeric($_GET['license_type_id']) && $_GET['license_type_id'] > 0) {
-    $license_type_id = $_GET['license_type_id'];
+if (isset($_GET['license_id']) && is_numeric($_GET['license_id']) && $_GET['license_id'] > 0) {
+    $license_id = $_GET['license_id'];
 } else {
-    $license_type_id = null;
+    $license_id = null;
 }
 
-if ($license_type_id) {
-    $licenseType = new View\LicenseTypeView($license_type_id);
-    if (!$licenseType->selectLicenseType()) {
-        General\Error::Add('Given license type doeas not exist');
+if ($license_id) {
+    $license = new View\LicenseView($license_id);
+    if (!$license->selectLicense()) {
+        General\Error::Add('Given license doeas not exist');
         header('location: index.php');
     }
 } else {
-    General\Error::Add('You need to specify the license type to be able to update it');
+    General\Error::Add('You need to specify the license to be able to update it');
     header('location: index.php');
 }
 
@@ -58,8 +58,8 @@ General\Error::Show();
         <div class="container">
             <h1>Administration page <a class="btn btn-primary" href="index.php">Back</a></h1>
 
-            <h2>Update license type - ID: <?=$license_type_id?></h2>
-            <?php $licenseType->licenseTypeUpdateForm(); ?>
+            <h2>Update license - ID: <?=$license_id?></h2>
+            <?php $license->licenseUpdateForm(); ?>
         </div>
     </div>
 </body>
