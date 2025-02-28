@@ -1,0 +1,1 @@
+SELECT * FROM licenses WHERE license_id = (SELECT license_id FROM license_keys WHERE license_key_id = :license_key_id);

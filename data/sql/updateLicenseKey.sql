@@ -1,0 +1,1 @@
+UPDATE license_keys SET license_key = :license_key WHERE license_key_id = :license_key_id;

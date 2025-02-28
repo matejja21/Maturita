@@ -1,10 +1,15 @@
 <?php
 
+// set namespace
 namespace General;
 
+// create static class
 class App {
+
+    // class properties
     public static $level;
 
+    // this method levels path for the root directory
     public static function leveledPath($path) {
         $leveledPath = "";
 
@@ -20,7 +25,7 @@ class App {
         return $leveledPath;
     }
 
-    // tato funkce je podle: https://stackoverflow.com/a/63891351/20757818
+    // this function is from: https://stackoverflow.com/a/63891351/20757818
     public static function str_short($string, $length, $lastLength = 0, $symbol = '...')
     {
         if (strlen($string) > $length) {

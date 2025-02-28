@@ -6,8 +6,16 @@ include_once "data/config.php";
 
 // create important objects
 $user = new View\UserView();
-$licenses = new View\LicenseView();
-$license_key = new View\LicenseKeyView();
+
+// validate GET parameter 'id'
+if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
+    $license = new View\LicenseView($_GET['id']);
+} else {
+    $license = new View\LicenseView($_GET['id']);
+}
+
+
+
 
 ?>
 
@@ -17,10 +25,9 @@ $license_key = new View\LicenseKeyView();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://accounts.google.com/gsi/client" async></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="data/media/icon.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>License key store</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="container-flow">
@@ -38,17 +45,12 @@ $license_key = new View\LicenseKeyView();
         <br>
     
         <div class="container">
-            <h1>Dashboard</h1>
-            <h2>Active licenses</h2>
-            <?php $license_key->showAllUserLicenseKeysActivate($user->id); // show table with active license keys ?>
-            <h2>Inactive licenses</h2>
-            <?php $license_key->showAllUserLicenseKeysDeactivate($user->id); // show table with inactive license keys ?>
+            <?php $license->showLicenseInfo(); // show informations about license ?>
         </div>
-    
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
 
-<?php General\Error::show(); // show errors ?>
+<?php General\Error::show(); // shoe errors ?>

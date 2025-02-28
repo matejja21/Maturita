@@ -1,25 +1,38 @@
 <?php
 
+    // start PHP session and disable showing errors
     session_start();
     ini_set('display_errors', 0);
 
-    // This code inspired by: https://www.youtube.com/watch?v=z3pZdmJ64jo&list=PL0eyrZgxdwhypQiZnYXM7z7-OTkcMgGPh&index=9
 
-    spl_autoload_register('AutoLoad');
+    // this function include all classes into page 
+    function IncludeOnPath($level) {
+        
+        $paths = [
+            "classes/general/app.class.php",
+            "classes/general/config.class.php",
+            "classes/general/db.class.php",
+            "classes/general/error.class.php",
+            "classes/general/log.class.php",
+            "classes/model/license.class.php",
+            "classes/model/user.class.php",
+            "classes/model/licensekey.class.php",
+            "classes/view/licenseview.class.php",
+            "classes/view/userview.class.php",
+            "classes/view/licensekeyview.class.php",
+            "classes/controller/licensecon.class.php",
+            "classes/controller/usercon.class.php",
+            "classes/controller/licensekeycon.class.php",
+        ];
 
-    function AutoLoad($className) {
-        for ($i = 0; $i < 3; $i++) {
-            $path = leveledPath("classes/", $i);
-            $extension = ".class.php";
-            $fullPath = $path . $className . $extension;
 
-            if (file_exists($fullPath)) {
-                include_once $fullPath;
-            }
+        foreach ($paths as $path) {
+            include_once(leveledPath($path, $level));
         }
     }
 
-    /*function leveledPath($path, int $level) {
+    // this method leveles path relativly to the root directory
+    function leveledPath($path, int $level) {
         $leveledPath = "";
 
         // adding to the start of the path number of stepbacks by given level
@@ -32,8 +45,9 @@
 
         // return leveled path string
         return $leveledPath;
-    }*/
+    }
 
+    // this function set level of the page to the leveling method
     function SetLevel(int $level = 0) {
         General\App::$level = $level;
     }
