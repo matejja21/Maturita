@@ -1,1 +1,0 @@
-UPDATE license_types SET activated = :activated WHERE license_type_id = :license_type_id;
