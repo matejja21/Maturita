@@ -1,17 +1,23 @@
 <?php
 
+// set namespace
 namespace Model;
 
+// use all important classes
 use General\Db as Db;
 use General\Config as Config;
 use General\Log as Log;
 use General\Error as Error;
 
+// create class
 class User {
+
+    // class properties
     public $id;
     public $email;
     public $level;
 
+    // constructor
     public function __construct() {
         if (isset($_SESSION['user']['id']) && !is_null($_SESSION['user']['id'])) {
             $this->id = $_SESSION['user']['id'];
@@ -30,6 +36,7 @@ class User {
         }
     }
 
+    // this method checks if user is logged in
     public function isLoggedIn() : bool {
         if ($this->id != null) {
             return true;
@@ -38,6 +45,7 @@ class User {
         }
     }
 
+    // this method checks if user is admin
     public function isAdmin() : bool {
         if ($this->level >= 1) {
             return true;
@@ -46,6 +54,7 @@ class User {
         }
     }
 
+    // this method changes users level in database
     public function changeLevel($level) {
         try {
             return Db::FExec('data/sql/updateUserLevel.sql', ["user_id" => $this->id, "level" => $level]);
@@ -55,6 +64,7 @@ class User {
         }
     }
 
+    // this method gets user from database by his email
     public function getUserByEmail($email) {
         $data = Db::FExec("data/sql/selectUserByEmail.sql", ["email" => $email]);
 
@@ -65,6 +75,7 @@ class User {
         }
     }
 
+    // this method adds user to database
     protected function addUser($email, $level = 0) {
         try {
             return Db::FExec('data/sql/addUser.sql', ["email" => $email, "level" => $level, "secret_key" => openssl_encrypt(bin2hex(random_bytes(16)), 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv'])], true);
@@ -74,6 +85,7 @@ class User {
         }
     }
 
+    // this method gets users secret key from database
     protected function getSecretKey() {
         try {
             return openssl_decrypt(Db::FExec('data/sql/selectUserSecretKey.sql', ['user_id' => $this->id])[0]['secret_key'], 'aes-256-cbc-hmac-sha256', Config::$general['secret_key'], 0, Config::$general['iv']);
@@ -83,6 +95,7 @@ class User {
         }
     }
 
+    // this method updates users secret key
     protected function updateSecretKey(string $key) {
         echo "I am happening";
         try {

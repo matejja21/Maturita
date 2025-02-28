@@ -1,0 +1,1 @@
+SELECT license_keys.license_key_id, license_keys.license_id, license_keys.activated, licenses.doc_url, license_keys.license_key, licenses.name, license_keys.expiration_date FROM license_keys INNER JOIN licenses ON license_keys.license_id = licenses.license_id WHERE user_id = :user_id;

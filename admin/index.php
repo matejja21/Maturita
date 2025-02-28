@@ -1,15 +1,19 @@
 <?php
 
+// includes for this script + setting level of the script
 include_once "../include/autoload.php";
+IncludeOnPath(1);
 include_once "../data/config.php";
-
 SetLevel(1);
 
+// verify if user is Admin
 $user = new View\UserView();
 $user->verifyAdmin();
 
-$licenseType = new View\LicenseTypeView();
+// create license object
+$license = new View\LicenseView();
 
+// show errors
 General\Error::Show();
 ?>
 
@@ -21,6 +25,7 @@ General\Error::Show();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://accounts.google.com/gsi/client" async></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="data/media/icon.svg">
     <title>License key store</title>
 </head>
 <body>
@@ -32,12 +37,7 @@ General\Error::Show();
         </a>
         
         <ul class="nav nav-pills">
-            <?php $user->userButton();?>
-            <!--<li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">About</a></li>-->
+            <?php $user->userButton(); // show user button for login or logout ?>
         </ul>
         </header>
         <div class="container">
@@ -45,9 +45,9 @@ General\Error::Show();
         
             <h1>Administration page</h1>
 
-            <h2>Create new license type</h2>
+            <h2>Create new license</h2>
             <div class="container">
-                <form method="POST" action="action/createLicenseType.php">
+                <form method="POST" action="action/createLicense.php">
                     <div class="form-group">
                         <lable for="create_name">Name: </lable>
                         <input type="text" id="create_name" name="name" class="form-control">
@@ -80,8 +80,8 @@ General\Error::Show();
                 </form>
             </div>
 
-            <h2>License Types</h2>
-            <?=$licenseType->showAllLicenseTypesAdmin()?>
+            <h2>Licenses</h2>
+            <?php $license->showAllLicensesAdmin(); // show admin all licenses in table ?>
         </div>
     </div>
 </body>

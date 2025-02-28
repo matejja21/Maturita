@@ -1,0 +1,1 @@
+SELECT licenses.license_id, licenses.description, licenses.name, (SELECT COUNT(*) FROM license_keys WHERE license_keys.license_id = licenses.license_id AND license_keys.user_id = :user_id) AS user_num_licenses FROM licenses;
